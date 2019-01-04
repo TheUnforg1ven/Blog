@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Post>
+
+@{ }
+
+<h2>Only for admin</h2>
+
+<div>
+    <ul class="list-group">
+        @foreach (var post in Model)
+        {
+        <li class="list-group-item">
+            @post.Title
+            <a class="btn btn-sm btn-warning" asp-controller="Admin" asp-action="Edit" asp-route-postId="@post.PostID">Edit</a>
+            <a class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="Remove" asp-route-postId="@post.PostID">Remove</a>
+        </li>
+        }
+    </ul>
+</div>

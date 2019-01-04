@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Post>
+
+@{ }
+
+<h1>Glad to see you here</h1>
+
+<div>
+    <ul class="list-group">
+        @foreach (var post in Model)
+        {
+        <li class="list-group-item">
+            <a asp-controller="Home" asp-action="Post" asp-route-postId="@post.PostID">@post.Title</a>
+        </li>
+        }
+    </ul>
+</div>
