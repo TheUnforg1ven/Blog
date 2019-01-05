@@ -1,9 +1,10 @@
-﻿@model Post
+﻿@model PostViewModel
 
 @{ }
 
 <div>
-    <form asp-controller="Admin" asp-action="Edit" method="post">
+    @* Choose the right 'enctyption type' to show an image correctly *@
+    <form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
         <input asp-for="PostID" type="hidden" />
         <div>
             <label>Title</label>
@@ -13,6 +14,10 @@
             <label>Body</label>
             <input asp-for="Body" />
         </div>
-        <input type="submit"  value="Save" />
+        <div>
+            <label>Image</label>
+            <input asp-for="Image" />
+        </div>
+        <input type="submit" value="Save" />
     </form>
 </div>

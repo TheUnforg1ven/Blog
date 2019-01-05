@@ -4,4 +4,10 @@
 
 <h2>@Model.Title</h2>
 
+@if (!string.IsNullOrEmpty(Model.Image))
+{
+    var imagePath = $"/Image/{Model.Image}";
+    <img src="@imagePath" width="600"/>
+}
+
 <p>@Model.Body</p>

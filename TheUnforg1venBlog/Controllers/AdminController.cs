@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TheUnforg1venBlog.Data.Interfaces;
 using TheUnforg1venBlog.Models;
+using TheUnforg1venBlog.Services.FileManager;
+using TheUnforg1venBlog.ViewModels;
 
 namespace TheUnforg1venBlog.Controllers
 {
@@ -14,9 +16,12 @@ namespace TheUnforg1venBlog.Controllers
 	{
 		private readonly IPostRepository _postRepository;
 
-		public AdminController(IPostRepository postRepository)
+		private readonly IFileManager _fileManager;
+
+		public AdminController(IPostRepository postRepository, IFileManager fileManager)
 		{
 			_postRepository = postRepository;
+			_fileManager = fileManager;
 		}
 
 		public IActionResult Index()
@@ -35,7 +40,7 @@ namespace TheUnforg1venBlog.Controllers
 			// if there are no such post
 			if (postId == null)
 				// view for new post creation
-				return View(new Post());
+				return View(new PostViewModel());
 			// if post exists
 			else
 			{
@@ -43,7 +48,12 @@ namespace TheUnforg1venBlog.Controllers
 				var post = _postRepository.GetPost((int)postId);
 
 				// return view with founded post
-				return View(post);
+				return View(new PostViewModel
+				{
+					PostID = post.PostID,
+					Title = post.Title,
+					Body = post.Body
+				});
 			}
 
 		}
@@ -53,8 +63,16 @@ namespace TheUnforg1venBlog.Controllers
 		/// </summary>
 		/// <param name="post">post to add or edit</param>
 		[HttpPost]
-		public async Task<IActionResult> Edit(Post post)
+		public async Task<IActionResult> Edit(PostViewModel postViewModel)
 		{
+			var post = new Post
+			{
+				PostID = postViewModel.PostID,
+				Title = postViewModel.Title,
+				Body = postViewModel.Body,
+				Image = await _fileManager.SaveImage(postViewModel.Image)
+			};
+
 			// if post exists
 			if (post.PostID > 0)
 				_postRepository.UpdatePost(post);

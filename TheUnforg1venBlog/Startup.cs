@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using TheUnforg1venBlog.Data;
 using TheUnforg1venBlog.Data.Interfaces;
 using TheUnforg1venBlog.Models;
+using TheUnforg1venBlog.Services.FileManager;
 
 namespace TheUnforg1venBlog
 {
@@ -45,6 +46,7 @@ namespace TheUnforg1venBlog
 				.AddDefaultTokenProviders(); 
 
 			services.AddTransient<IPostRepository, PostRepository>();
+			services.AddTransient<IFileManager, FileManager>();
 
 			services.AddMvc();
 		}
