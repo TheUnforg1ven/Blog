@@ -52,7 +52,8 @@ namespace TheUnforg1venBlog.Controllers
 				{
 					PostID = post.PostID,
 					Title = post.Title,
-					Body = post.Body
+					Body = post.Body,
+					CurrentImage = post.Image
 				});
 			}
 
@@ -70,8 +71,12 @@ namespace TheUnforg1venBlog.Controllers
 				PostID = postViewModel.PostID,
 				Title = postViewModel.Title,
 				Body = postViewModel.Body,
-				Image = await _fileManager.SaveImage(postViewModel.Image)
 			};
+
+			if (postViewModel.Image == null)
+				post.Image = postViewModel.CurrentImage;
+			else
+				post.Image = await _fileManager.SaveImage(postViewModel.Image);
 
 			// if post exists
 			if (post.PostID > 0)

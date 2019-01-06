@@ -1,0 +1,25 @@
+﻿body {
+    background: url(../content/static/bgmain.jpg);
+}
+
+.main-img {
+    margin: 5px 0px 5px 0px;
+    width: 100%;
+    height: auto;
+}
+
+.blog-title {
+    font-family: 'Courier New';
+    font-size: 44px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.post-title {
+    font-family: 'Courier New';
+    font-size: 28px;
+}
+
+.content-editor {
+    background-color: aliceblue;
+}

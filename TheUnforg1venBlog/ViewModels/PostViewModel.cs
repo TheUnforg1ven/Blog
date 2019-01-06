@@ -10,6 +10,8 @@ namespace TheUnforg1venBlog.ViewModels
 
 		public string Body { get; set; }
 
+		public string CurrentImage { get; set; }
+
 		public IFormFile Image { get; set; }
 	}
 }

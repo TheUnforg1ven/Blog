@@ -7,7 +7,7 @@
 @if (!string.IsNullOrEmpty(Model.Image))
 {
     var imagePath = $"/Image/{Model.Image}";
-    <img src="@imagePath" width="600"/>
+    <img src="@imagePath" class="main-img" />
 }
 
-<p>@Model.Body</p>
+<p>@Html.Raw(Model.Body)</p>

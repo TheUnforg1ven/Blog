@@ -2,16 +2,22 @@
 
 @{ }
 
-<h1>Glad to see you here</h1>
+<h1 class="blog-title">Welcome here, at my coding blog</h1>
 
-<img src="~/content/static/hotlinw.jpg" height="500" />
 <div>
     <ul class="list-group">
         @foreach (var post in Model)
         {
-        <li class="list-group-item">
-            <a asp-controller="Home" asp-action="Post" asp-route-postId="@post.PostID">@post.Title</a>
-        </li>
+            var imagePath = $"/Image/{post.Image}";
+            <li class="list-group-item">
+                <a class="post-title" asp-controller="Home" asp-action="Post" asp-route-postId="@post.PostID">
+                    <u>@post.Title</u>
+                    @if (imagePath != "/Image/")
+                    {
+                        <img class="main-img" src="@imagePath" />
+                    }
+                </a>
+            </li>
         }
     </ul>
 </div>
