@@ -4,16 +4,28 @@
 
 <link href="~/libs/Trumbowyg-master/dist/ui/trumbowyg.min.css" rel="stylesheet" />
 
-<div class="row">
+<div>
     @* Choose the right 'enctyption type' to show an image correctly *@
     <form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
         <input asp-for="PostID" type="hidden" />
         <div class="form-group">
             <label>Title</label>
+            <div><span asp-validation-for="Title" class="text-danger"></span></div>
             <input class="form-control" asp-for="Title" />
         </div>
         <div class="form-group">
+            <label>Description</label>
+            <div><span asp-validation-for="Description" class="text-danger"></span></div>
+            <input class="form-control" asp-for="Description" />
+        </div>
+        <div class="form-group">
+            <label>Tags</label>
+            <div><span asp-validation-for="Tags" class="text-danger"></span></div>
+            <input class="form-control" asp-for="Tags" />
+        </div>
+        <div class="form-group">
             <label>Body</label>
+            <div><span asp-validation-for="Body" class="text-danger"></span></div>
             <textarea class="form-control" id="contentEditor" asp-for="Body"></textarea>
         </div>
         <div class="form-group">

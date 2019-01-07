@@ -9,5 +9,7 @@ namespace TheUnforg1venBlog.Services.FileManager
 		FileStream ImageStream(string fileImage);
 
 		Task<string> SaveImage(IFormFile fileImage);
+
+		bool RemoveImage(string image);
 	}
 }

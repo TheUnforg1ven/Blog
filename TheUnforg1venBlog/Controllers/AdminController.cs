@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TheUnforg1venBlog.Data.Interfaces;
@@ -26,7 +25,7 @@ namespace TheUnforg1venBlog.Controllers
 
 		public IActionResult Index()
 		{
-			var posts = _postRepository.Posts;
+			var posts = _postRepository.Posts.Reverse();
 
 			return View(posts);
 		}
@@ -53,7 +52,9 @@ namespace TheUnforg1venBlog.Controllers
 					PostID = post.PostID,
 					Title = post.Title,
 					Body = post.Body,
-					CurrentImage = post.Image
+					CurrentImage = post.Image,
+					Description = post.Description,
+					Tags = post.Tags
 				});
 			}
 
@@ -66,30 +67,46 @@ namespace TheUnforg1venBlog.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Edit(PostViewModel postViewModel)
 		{
-			var post = new Post
+			if (ModelState.IsValid)
 			{
-				PostID = postViewModel.PostID,
-				Title = postViewModel.Title,
-				Body = postViewModel.Body,
-			};
+				var post = new Post
+				{
+					PostID = postViewModel.PostID,
+					Title = postViewModel.Title,
+					Body = postViewModel.Body,
+					Description = postViewModel.Description,
+					Tags = postViewModel.Tags
+				};
 
-			if (postViewModel.Image == null)
-				post.Image = postViewModel.CurrentImage;
-			else
-				post.Image = await _fileManager.SaveImage(postViewModel.Image);
+				if (postViewModel.Image == null)
+				{
+					post.Image = postViewModel.CurrentImage;
+				}
+				else
+				{
+					if (!string.IsNullOrEmpty(postViewModel.CurrentImage))
+						_fileManager.RemoveImage(postViewModel.CurrentImage);
 
-			// if post exists
-			if (post.PostID > 0)
-				_postRepository.UpdatePost(post);
-			// if there no such post
-			else
-				_postRepository.AddPost(post);
+					post.Image = await _fileManager.SaveImage(postViewModel.Image);
+				}
+					
+				// if post exists
+				if (post.PostID > 0)
+					_postRepository.UpdatePost(post);
+				// if there no such post
+				else
+					_postRepository.AddPost(post);
 
-			// all successfully saved in DB context
-			if (await _postRepository.SaveChangesAsync())
-				return RedirectToAction("Index");
+				// all successfully saved in DB context
+				if (await _postRepository.SaveChangesAsync())
+					return RedirectToAction("Index");
+				else
+					return View(post);
+			}
 			else
-				return View(post);
+			{
+				return View(postViewModel);
+			}
 		}
 
 		/// <summary>

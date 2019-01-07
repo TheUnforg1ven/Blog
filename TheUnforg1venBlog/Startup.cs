@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TheUnforg1venBlog.Data;
 using TheUnforg1venBlog.Data.Interfaces;
-using TheUnforg1venBlog.Models;
 using TheUnforg1venBlog.Services.FileManager;
 
 namespace TheUnforg1venBlog
@@ -62,8 +57,25 @@ namespace TheUnforg1venBlog
 				app.UseAuthentication();
 				app.UseDeveloperExceptionPage();
 			}
+			else
+			{
+				app.UseExceptionHandler("/Error");
+			}
 
-			app.UseMvcWithDefaultRoute();
+			// add all routes
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+					name: "Error",
+					template: "Error",
+					defaults: new { controller = "Error", action = "Error" }
+				);
+
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Home}/{action=Index}/{id?}"
+				);
+			});
 
 			//SeedRoles.CreateRoles(serviceProvider).Wait();
 		}

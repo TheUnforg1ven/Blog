@@ -9,15 +9,22 @@
         @foreach (var post in Model)
         {
             var imagePath = $"/Image/{post.Image}";
-            <li class="list-group-item">
-                <a class="post-title" asp-controller="Home" asp-action="Post" asp-route-postId="@post.PostID">
-                    <u>@post.Title</u>
-                    @if (imagePath != "/Image/")
-                    {
-                        <img class="main-img" src="@imagePath" />
-                    }
-                </a>
-            </li>
+            var tagsRight = post.Tags.Split(',', ' ').ToList();
+        <li class="list-group-item">
+            <a class="post-title" asp-controller="Home" asp-action="Post" asp-route-postId="@post.PostID">
+                <u>@post.Title</u>
+            </a>
+            <div>
+                @foreach (var tag in tagsRight)
+                {
+                    <a asp-controller="Home" asp-action="SearchTags" asp-route-searchString="@tag" class="tags">@tag</a>
+                }
+            </div>
+            @if (imagePath != "/Image/")
+            {
+                <img class="main-img" src="@imagePath" />
+            }
+        </li>
         }
     </ul>
 </div>

@@ -62,6 +62,51 @@ namespace TheUnforg1venBlog.Controllers
 			return View(loginViewModel);
 		}
 
+		/// <summary>
+		/// Register method
+		/// </summary>
+		/// <returns>Register view</returns>
+		public IActionResult Register() => View();
+
+		/// <summary>
+		/// Register post method
+		/// </summary>
+		/// <param name="loginViewModel">created viewmodel</param>
+		/// <returns>same view if not ok</returns>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Register(LoginViewModel loginViewModel)
+		{
+			// if state is valid
+			if (ModelState.IsValid)
+			{
+				// craete new user
+				var user = new IdentityUser() { UserName = loginViewModel.UserName };
+
+				// create new account (needs new user)
+				var result = await _userManager.CreateAsync(user, loginViewModel.Password);
+
+				// if all is ok
+				if (result.Succeeded)
+				{
+					// go to home page
+					return RedirectToAction("Index", "Home");
+				}
+
+				// if not
+				else
+				{
+					// add model errors
+					foreach (var err in result.Errors)
+						ModelState.AddModelError("", $"{err.Description}");
+				}
+
+			}
+
+			// same view
+			return View(loginViewModel);
+		}
+
 		[HttpPost]
 		[Authorize]
 		public async Task<IActionResult> Logout()

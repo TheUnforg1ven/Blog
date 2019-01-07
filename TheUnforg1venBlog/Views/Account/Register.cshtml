@@ -1,12 +1,11 @@
 ﻿@model LoginViewModel
 
-<h2>Please log in to add posts</h2>
+<h2>Please register to use all blog functions</h2>
 
 <div class="row justify-content-center align-items-center h-100 loginForm">
     <div class="col-md-8 col-md-offset-2">
-        <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal" role="form">
+        <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ReturnUrl" />
             <div class="form-group">
                 <label class="col-md-2 control-label">Username</label>
                 <div class="col-md-10">
@@ -14,7 +13,6 @@
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
             </div>
-
             <div class="form-group">
                 <label asp-for="Password" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
@@ -22,10 +20,15 @@
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
-
-            <div class="form-group">
+            <div class="form-group ">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Log in" />
+                    <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Register" />
+                </div>
+            </div>
+
+            <div class="form-group text-center">
+                <div class="col-md-offset-2 col-md-10">
+                    <a asp-controller="Account" asp-action="Login" class="mr-5">You already have an account? Log in</a>
                 </div>
             </div>
         </form>

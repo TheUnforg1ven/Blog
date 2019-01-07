@@ -7,15 +7,17 @@
     <link href="~/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
+    <style> .input-validation-error { border-color: red; background-color: #fee; } </style>
 </head>
-<body >
+<body>
     <nav class="navbar navbar-expand navbar-dark bg-dark" role="navigation">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">TheUnforg1ven Blog</a>
         <div class="container">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item "><a asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
-                    <li class="nav-item "><a asp-controller="Admin" asp-action="Index" class="nav-link">Post processing</a></li>
+                    <li class="nav-item "><a asp-controller="Admin" asp-action="Index" class="nav-link my-sm-0 mr-5">Post processing</a></li>
+                    @await Html.PartialAsync("SearchForm")
                     @await Html.PartialAsync("LoginPartial")
                 </ul>
             </div>

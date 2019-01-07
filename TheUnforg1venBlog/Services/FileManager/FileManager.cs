@@ -44,5 +44,20 @@ namespace TheUnforg1venBlog.Services.FileManager
 
 			return fileName;
 		}
+
+		public bool RemoveImage(string image)
+		{
+			var file = Path.Combine(_imagePath, image);
+
+			if (File.Exists(file))
+			{
+				File.Delete(file);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }

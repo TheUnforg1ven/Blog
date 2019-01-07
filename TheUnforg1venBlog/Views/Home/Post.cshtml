@@ -4,6 +4,20 @@
 
 <h2>@Model.Title</h2>
 
+@if (Model.Tags != null)
+{
+    var tagsRight = Model.Tags.Split(',', ' ').ToList();
+
+    <div>
+        @foreach (var tag in tagsRight)
+        {
+            <a class="tags">@tag</a>
+        }
+    </div>
+}
+
+<p>Description: @Model.Description</p>
+
 @if (!string.IsNullOrEmpty(Model.Image))
 {
     var imagePath = $"/Image/{Model.Image}";

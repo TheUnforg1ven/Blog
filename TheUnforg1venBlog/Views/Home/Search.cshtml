@@ -1,0 +1,37 @@
+﻿@model SearchViewModel
+
+@{ }
+
+<div>
+    <h3>All posts with: @Model.SearchString</h3>
+    @if (Model.Posts.Count() == 0)
+    {
+        <h4>Nothing found by your request</h4>
+    }
+</div>
+
+<div class="row">
+    <ul class="list-group">
+        @foreach (var post in Model.Posts)
+        {
+            var imagePath = $"/Image/{post.Image}";
+            var tagsRight = post.Tags.Split(',', ' ').ToList();
+            <li class="list-group-item">
+                <a class="post-title" asp-controller="Home" asp-action="Post" asp-route-postId="@post.PostID">
+                    <u>@post.Title</u>
+                </a>
+                <div>
+                    @foreach (var tag in tagsRight)
+                    {
+                        <a asp-controller="Home" asp-action="SearchTags" asp-route-searchString="@tag" class="tags">@tag</a>
+                    }
+                </div>
+                @if (imagePath != "/Image/")
+                {
+                    <img class="main-img" src="@imagePath" />
+                }
+                
+            </li>
+        }
+    </ul>
+</div>
